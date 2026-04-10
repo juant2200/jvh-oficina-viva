@@ -298,6 +298,14 @@ class Handler(SimpleHTTPRequestHandler):
                 "drive": {"lastPulledAt": drive.get("lastPulledAt"), "count": len(drive.get("files", []))},
                 "mail":  {"lastPulledAt": mail.get("lastPulledAt"),  "count": len(mail.get("threads", []))},
             })
+
+        # Redirect / to /OFFICE_SIM.html
+        if parsed.path == "/" or parsed.path == "":
+            self.send_response(302)
+            self.send_header("Location", "/OFFICE_SIM.html")
+            self.end_headers()
+            return
+
         return SimpleHTTPRequestHandler.do_GET(self)
 
     def do_POST(self):
