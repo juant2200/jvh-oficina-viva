@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.git/
+*.tmp
+office_state.json.tmp
