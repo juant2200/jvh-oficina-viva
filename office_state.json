@@ -1,0 +1,1376 @@
+{
+  "lastUpdated": "2026-04-10T01:56:09+02:00",
+  "focusLock": {
+    "active": [
+      "GMP",
+      "UTS",
+      "CargX"
+    ],
+    "parked": [
+      "Lavazza RD",
+      "Axione",
+      "Valor",
+      "JVH Registration"
+    ]
+  },
+  "floorPlan": {
+    "width": 1000,
+    "height": 640,
+    "zones": [
+      {
+        "id": "ceo",
+        "label": "CEO",
+        "x": 20,
+        "y": 20,
+        "w": 180,
+        "h": 180,
+        "color": "#fbbf24"
+      },
+      {
+        "id": "coo",
+        "label": "COO",
+        "x": 220,
+        "y": 20,
+        "w": 170,
+        "h": 180,
+        "color": "#10b981"
+      },
+      {
+        "id": "meeting",
+        "label": "Sala de Junta",
+        "x": 410,
+        "y": 20,
+        "w": 280,
+        "h": 180,
+        "color": "#10b981"
+      },
+      {
+        "id": "finance",
+        "label": "Finance & Tax",
+        "x": 710,
+        "y": 20,
+        "w": 270,
+        "h": 180,
+        "color": "#3b82f6"
+      },
+      {
+        "id": "legal",
+        "label": "Legal / HR",
+        "x": 20,
+        "y": 220,
+        "w": 220,
+        "h": 180,
+        "color": "#a855f7"
+      },
+      {
+        "id": "ops",
+        "label": "Operations",
+        "x": 260,
+        "y": 220,
+        "w": 220,
+        "h": 180,
+        "color": "#f59e0b"
+      },
+      {
+        "id": "bd",
+        "label": "Biz Dev",
+        "x": 500,
+        "y": 220,
+        "w": 220,
+        "h": 180,
+        "color": "#ef4444"
+      },
+      {
+        "id": "marketing",
+        "label": "Marketing",
+        "x": 740,
+        "y": 220,
+        "w": 240,
+        "h": 180,
+        "color": "#ec4899"
+      },
+      {
+        "id": "strategy",
+        "label": "Strategy",
+        "x": 20,
+        "y": 420,
+        "w": 240,
+        "h": 200,
+        "color": "#8b5cf6"
+      },
+      {
+        "id": "research",
+        "label": "Research",
+        "x": 280,
+        "y": 420,
+        "w": 240,
+        "h": 200,
+        "color": "#06b6d4"
+      },
+      {
+        "id": "exec",
+        "label": "Exec Asst",
+        "x": 540,
+        "y": 420,
+        "w": 200,
+        "h": 200,
+        "color": "#eab308"
+      },
+      {
+        "id": "cafe",
+        "label": "Cafeteria",
+        "x": 760,
+        "y": 420,
+        "w": 220,
+        "h": 200,
+        "color": "#64748b"
+      }
+    ]
+  },
+  "agents": [
+    {
+      "id": "coo",
+      "name": "COO",
+      "title": "Chief of Staff",
+      "x": 305,
+      "y": 110,
+      "home": [
+        305,
+        110
+      ],
+      "status": "active",
+      "mood": "focused",
+      "color": "#10b981",
+      "model": "Claude Opus 4.6",
+      "currentTask": "Orquestando: GMP ancla + UTS cliente #2 + CargX piloto",
+      "lastOutput": "—",
+      "mission": "Orquestar la oficina. Convertir trabajo en decisiones para el CEO.",
+      "tools": [
+        "gdrive",
+        "gmail",
+        "slack",
+        "calendly",
+        "granola",
+        "chrome-mcp",
+        "computer-use",
+        "scheduled-tasks",
+        "canva",
+        "figma",
+        "ms-docs"
+      ],
+      "subAgents": [],
+      "memoryPath": "coo/MEMORY.md",
+      "question": null
+    },
+    {
+      "id": "finance",
+      "name": "Finance",
+      "title": "Finance & Tax",
+      "x": 845,
+      "y": 110,
+      "home": [
+        845,
+        110
+      ],
+      "status": "active",
+      "mood": "working",
+      "color": "#3b82f6",
+      "model": "Claude Opus 4.6",
+      "currentTask": "Cash forecast UTS marzo + tax checklist RD",
+      "lastOutput": "—",
+      "mission": "Budgeting, cash flow, tax, unit economics, financiación.",
+      "tools": [
+        "gdrive",
+        "gmail",
+        "ms-docs",
+        "chrome-mcp",
+        "scheduled-tasks"
+      ],
+      "subAgents": [
+        "fp&a-analyst",
+        "tax-structuring",
+        "treasury",
+        "deal-model"
+      ],
+      "memoryPath": "finance/MEMORY.md",
+      "question": "Necesito los números reales de UTS marzo — ¿puedes pasarme el P&L?"
+    },
+    {
+      "id": "legal",
+      "name": "Legal/HR",
+      "title": "Legal & RH",
+      "x": 130,
+      "y": 310,
+      "home": [
+        130,
+        310
+      ],
+      "status": "active",
+      "mood": "thinking",
+      "color": "#a855f7",
+      "model": "Claude Opus 4.6",
+      "currentTask": "Contratos GMP advertisers + memo vehículo para Parada",
+      "lastOutput": "—",
+      "mission": "Contratos, agreements, estructura corporativa, hiring.",
+      "tools": [
+        "gdrive",
+        "gmail",
+        "ms-docs",
+        "chrome-mcp"
+      ],
+      "subAgents": [
+        "contract-drafter",
+        "hr-ops",
+        "governance"
+      ],
+      "memoryPath": "legal/MEMORY.md",
+      "question": "¿Qué vehículo usamos para Javier de Parada — JVH o SPV nuevo?"
+    },
+    {
+      "id": "ops",
+      "name": "Ops",
+      "title": "Operaciones",
+      "x": 370,
+      "y": 310,
+      "home": [
+        370,
+        310
+      ],
+      "status": "active",
+      "mood": "working",
+      "color": "#f59e0b",
+      "model": "Claude Haiku 4.5",
+      "currentTask": "SOP onboarding advertisers GMP + launch checklist CargX",
+      "lastOutput": "—",
+      "mission": "SOPs, procesos, execution trackers, bottlenecks.",
+      "tools": [
+        "gdrive",
+        "slack",
+        "calendly",
+        "scheduled-tasks",
+        "chrome-mcp"
+      ],
+      "subAgents": [
+        "sop-builder",
+        "process-auditor",
+        "launch-manager"
+      ],
+      "memoryPath": "ops/MEMORY.md",
+      "question": null
+    },
+    {
+      "id": "bd",
+      "name": "BD",
+      "title": "Business Development",
+      "x": 610,
+      "y": 310,
+      "home": [
+        610,
+        310
+      ],
+      "status": "active",
+      "mood": "hunting",
+      "color": "#ef4444",
+      "model": "Claude Sonnet 4.6",
+      "currentTask": "Pipeline advertisers GMP — Farmacia Carol lead",
+      "lastOutput": "—",
+      "mission": "Opportunity sourcing, partnerships, meeting prep.",
+      "tools": [
+        "gdrive",
+        "gmail",
+        "slack",
+        "calendly",
+        "granola",
+        "chrome-mcp"
+      ],
+      "subAgents": [
+        "pipeline-mgr",
+        "meeting-brief",
+        "partnership-scout"
+      ],
+      "memoryPath": "bd/MEMORY.md",
+      "question": null
+    },
+    {
+      "id": "marketing",
+      "name": "Marketing",
+      "title": "Marca & Comms",
+      "x": 860,
+      "y": 310,
+      "home": [
+        860,
+        310
+      ],
+      "status": "active",
+      "mood": "working",
+      "color": "#ec4899",
+      "model": "Claude Sonnet 4.6",
+      "currentTask": "One-pager GMP Farmacia Carol + deck master JVH",
+      "lastOutput": "—",
+      "mission": "Brand positioning, decks, ad copy, sales collateral.",
+      "tools": [
+        "gdrive",
+        "canva",
+        "figma",
+        "gmail",
+        "slack",
+        "chrome-mcp"
+      ],
+      "subAgents": [
+        "brand-strategist",
+        "copywriter",
+        "deck-builder"
+      ],
+      "memoryPath": "marketing/MEMORY.md",
+      "question": null
+    },
+    {
+      "id": "strategy",
+      "name": "Strategy",
+      "title": "Ventures",
+      "x": 140,
+      "y": 520,
+      "home": [
+        140,
+        520
+      ],
+      "status": "active",
+      "mood": "thinking",
+      "color": "#8b5cf6",
+      "model": "Claude Opus 4.6",
+      "currentTask": "Scoring CargX piloto Rica vs retail ancla",
+      "lastOutput": "—",
+      "mission": "Evaluar nuevas ventures, scoring, roadmaps.",
+      "tools": [
+        "gdrive",
+        "chrome-mcp",
+        "ms-docs",
+        "granola"
+      ],
+      "subAgents": [
+        "venture-analyst",
+        "competitive-intel",
+        "roadmap-planner"
+      ],
+      "memoryPath": "strategy/MEMORY.md",
+      "question": null
+    },
+    {
+      "id": "research",
+      "name": "Research",
+      "title": "Inteligencia",
+      "x": 400,
+      "y": 520,
+      "home": [
+        400,
+        520
+      ],
+      "status": "active",
+      "mood": "reading",
+      "color": "#06b6d4",
+      "model": "Claude Sonnet 4.6",
+      "currentTask": "Monitoring tourism RD + retail media Latam",
+      "lastOutput": "—",
+      "mission": "Market research, competitor tracking, briefings.",
+      "tools": [
+        "chrome-mcp",
+        "ms-docs",
+        "gdrive",
+        "granola"
+      ],
+      "subAgents": [
+        "sector-analyst",
+        "competitor-monitor",
+        "news-briefing"
+      ],
+      "memoryPath": "research/MEMORY.md",
+      "question": null
+    },
+    {
+      "id": "exec",
+      "name": "Exec",
+      "title": "Asistente Ejecutivo",
+      "x": 640,
+      "y": 520,
+      "home": [
+        640,
+        520
+      ],
+      "status": "support",
+      "mood": "organizing",
+      "color": "#eab308",
+      "model": "Claude Haiku 4.5",
+      "currentTask": "Agenda CEO semana + follow-ups",
+      "lastOutput": "—",
+      "mission": "Meeting notes, reminders, agendas.",
+      "tools": [
+        "gmail",
+        "calendly",
+        "granola",
+        "scheduled-tasks",
+        "slack"
+      ],
+      "subAgents": [
+        "meeting-prep",
+        "follow-up",
+        "reminders"
+      ],
+      "memoryPath": "exec/MEMORY.md",
+      "question": null
+    }
+  ],
+  "cashflowEngines": [
+    {
+      "name": "UTS",
+      "health": "yellow",
+      "mrr": "RD$270K/mo",
+      "note": "Cliente ancla #1 estable · #2 pendiente cash deploy P-001"
+    },
+    {
+      "name": "GMP",
+      "health": "red",
+      "mrr": "RD$0",
+      "note": "4+1 screens · Farmacia Carol lead ancla (P-003)"
+    },
+    {
+      "name": "CargX",
+      "health": "gray",
+      "mrr": "TBD",
+      "note": "Piloto Rica en discovery. Vendor TrackLatam (P-004)"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "P-001",
+      "priority": "p1",
+      "owner": "finance",
+      "title": "Cash deployment $18k para arranque UTS cliente ancla #2",
+      "blocker": "Requiere CEO. ROI 3.2x en 90 días. Impacta runway en ~12 días.",
+      "status": "pending",
+      "createdAt": "2026-04-09T22:30:00+02:00"
+    },
+    {
+      "id": "P-002",
+      "priority": "p1",
+      "owner": "legal",
+      "title": "Vehículo legal para deal Javier de Parada",
+      "blocker": "Legal flag: si firma JVH directo hay exposición cruzada. Recomendación SPV.",
+      "status": "pending",
+      "createdAt": "2026-04-09T20:15:00+02:00"
+    },
+    {
+      "id": "P-003",
+      "priority": "p2",
+      "owner": "bd",
+      "title": "Firma acuerdo ancla GMP — Farmacia Carol",
+      "blocker": "Deal $4.5k/mes × 6 meses. Contrato standard listo, falta firma CEO.",
+      "status": "pending",
+      "createdAt": "2026-04-09T18:45:00+02:00"
+    },
+    {
+      "id": "P-004",
+      "priority": "p2",
+      "owner": "ops",
+      "title": "Vendor TrackLatam para CargX piloto",
+      "blocker": "$280/mes mes-a-mes. Breakable si piloto Rica no avanza.",
+      "status": "pending",
+      "createdAt": "2026-04-09T16:20:00+02:00"
+    },
+    {
+      "id": "P-005",
+      "priority": "p3",
+      "owner": "marketing",
+      "title": "Budget campaña launch GMP — $3.5k",
+      "blocker": "LinkedIn + press RD. Target 50 leads. KPI mín 30, review 30 días.",
+      "status": "pending",
+      "createdAt": "2026-04-09T14:10:00+02:00"
+    }
+  ],
+  "ideas": [
+    {
+      "id": "I-001",
+      "src": "Strategy",
+      "status": "open",
+      "text": "GMP retail-media ancla en Farmacia Carol como caso replicable en 3-5 cadenas RD · ~$25k/mes potencial."
+    },
+    {
+      "id": "I-002",
+      "src": "BD",
+      "status": "open",
+      "text": "UTS cross-sell a advertisers GMP actuales · 0 CAC, conversión esperada 30%."
+    },
+    {
+      "id": "I-003",
+      "src": "Research",
+      "status": "open",
+      "text": "Feria turismo Punta Cana en 6 semanas — CargX ventana de visibilidad con última milla a hoteles."
+    },
+    {
+      "id": "I-004",
+      "src": "Finance",
+      "status": "open",
+      "text": "Refinanciar línea de crédito (12%→9%) libera ~$40k working capital."
+    },
+    {
+      "id": "I-005",
+      "src": "Strategy",
+      "status": "open",
+      "text": "Valor parking — revisar Q3 2026 si GMP/UTS cash-flow positivo."
+    }
+  ],
+  "opportunities": [
+    {
+      "id": "O-001",
+      "title": "GMP advertiser ancla — Farmacia Carol",
+      "value": "RD$27K / 6 meses",
+      "window": "Esta semana",
+      "owner": "BD",
+      "status": "hot"
+    },
+    {
+      "id": "O-002",
+      "title": "UTS segundo cliente ancla",
+      "value": "RD$15K/mes",
+      "window": "30 días",
+      "owner": "Finance",
+      "status": "open"
+    },
+    {
+      "id": "O-003",
+      "title": "CargX piloto Rica",
+      "value": "RD$8K piloto",
+      "window": "45 días",
+      "owner": "Strategy",
+      "status": "open"
+    }
+  ],
+  "dialogues": [
+    {
+      "from": "finance",
+      "to": "marketing",
+      "text": "Necesito tu input de 2 min.",
+      "ts": "2026-04-10T01:23:09+02:00",
+      "expiresAt": 1775776998.569352
+    },
+    {
+      "from": "ops",
+      "to": "marketing",
+      "text": "Reviso el último draft contigo.",
+      "ts": "2026-04-10T01:23:22+02:00",
+      "expiresAt": 1775777011.546523
+    },
+    {
+      "from": "bd",
+      "to": "exec",
+      "text": "¿Cerramos la postura para meeting?",
+      "ts": "2026-04-10T01:23:40+02:00",
+      "expiresAt": 1775777029.47753
+    },
+    {
+      "from": "finance",
+      "to": "ops",
+      "text": "¿Viste la última aprobación?",
+      "ts": "2026-04-10T01:25:09+02:00",
+      "expiresAt": 1775777118.538258
+    },
+    {
+      "from": "bd",
+      "to": "marketing",
+      "text": "Alineemos antes del weekly.",
+      "ts": "2026-04-10T01:25:27+02:00",
+      "expiresAt": 1775777136.590739
+    },
+    {
+      "from": "marketing",
+      "to": "exec",
+      "text": "Te paso el memo en 10.",
+      "ts": "2026-04-10T01:26:22+02:00",
+      "expiresAt": 1775777191.492461
+    },
+    {
+      "from": "strategy",
+      "to": "research",
+      "text": "Reviso el último draft contigo.",
+      "ts": "2026-04-10T01:26:40+02:00",
+      "expiresAt": 1775777209.491376
+    },
+    {
+      "from": "bd",
+      "to": "marketing",
+      "text": "Alineemos antes del weekly.",
+      "ts": "2026-04-10T01:27:52+02:00",
+      "expiresAt": 1775777281.496209
+    },
+    {
+      "from": "finance",
+      "to": "marketing",
+      "text": "Alineemos antes del weekly.",
+      "ts": "2026-04-10T01:29:04+02:00",
+      "expiresAt": 1775777353.496289
+    },
+    {
+      "from": "finance",
+      "to": "strategy",
+      "text": "Café rápido ☕",
+      "ts": "2026-04-10T01:30:09+02:00",
+      "expiresAt": 1775777418.545011
+    },
+    {
+      "from": "coo",
+      "to": "marketing",
+      "text": "¿Escalamos esto al CEO?",
+      "ts": "2026-04-10T01:30:09+02:00",
+      "expiresAt": 1775777418.554129
+    },
+    {
+      "from": "ops",
+      "to": "marketing",
+      "text": "Reviso el último draft contigo.",
+      "ts": "2026-04-10T01:33:09+02:00",
+      "expiresAt": 1775777598.536353
+    },
+    {
+      "from": "coo",
+      "to": "bd",
+      "text": "Luego te cuento de GMP.",
+      "ts": "2026-04-10T01:33:09+02:00",
+      "expiresAt": 1775777598.587777
+    },
+    {
+      "from": "finance",
+      "to": "research",
+      "text": "¿Cerramos la postura para meeting?",
+      "ts": "2026-04-10T01:33:57+02:00",
+      "expiresAt": 1775777646.539133
+    },
+    {
+      "from": "finance",
+      "to": "marketing",
+      "text": "¿Cerramos la postura para meeting?",
+      "ts": "2026-04-10T01:34:10+02:00",
+      "expiresAt": 1775777659.487936
+    },
+    {
+      "from": "finance",
+      "to": "strategy",
+      "text": "Te paso el memo en 10.",
+      "ts": "2026-04-10T01:34:28+02:00",
+      "expiresAt": 1775777677.487115
+    },
+    {
+      "from": "legal",
+      "to": "bd",
+      "text": "Necesito tu input de 2 min.",
+      "ts": "2026-04-10T01:38:09+02:00",
+      "expiresAt": 1775777898.497151
+    },
+    {
+      "from": "coo",
+      "to": "bd",
+      "text": "¿Cerramos la postura para meeting?",
+      "ts": "2026-04-10T01:39:09+02:00",
+      "expiresAt": 1775777958.502906
+    },
+    {
+      "from": "coo",
+      "to": "ops",
+      "text": "¿Cerramos la postura para meeting?",
+      "ts": "2026-04-10T01:40:09+02:00",
+      "expiresAt": 1775778018.491207
+    },
+    {
+      "from": "finance",
+      "to": "marketing",
+      "text": "Necesito tu input de 2 min.",
+      "ts": "2026-04-10T01:40:09+02:00",
+      "expiresAt": 1775778018.504019
+    },
+    {
+      "from": "finance",
+      "to": "bd",
+      "text": "¿Escalamos esto al CEO?",
+      "ts": "2026-04-10T01:42:09+02:00",
+      "expiresAt": 1775778138.498711
+    },
+    {
+      "from": "finance",
+      "to": "marketing",
+      "text": "Alineemos antes del weekly.",
+      "ts": "2026-04-10T01:45:09+02:00",
+      "expiresAt": 1775778318.512809
+    },
+    {
+      "from": "research",
+      "to": "exec",
+      "text": "Café rápido ☕",
+      "ts": "2026-04-10T01:46:09+02:00",
+      "expiresAt": 1775778378.529584
+    },
+    {
+      "from": "finance",
+      "to": "exec",
+      "text": "Alineemos antes del weekly.",
+      "ts": "2026-04-10T01:48:09+02:00",
+      "expiresAt": 1775778498.49491
+    },
+    {
+      "from": "finance",
+      "to": "marketing",
+      "text": "¿Cerramos la postura para meeting?",
+      "ts": "2026-04-10T01:49:09+02:00",
+      "expiresAt": 1775778558.50131
+    },
+    {
+      "from": "finance",
+      "to": "marketing",
+      "text": "Reviso el último draft contigo.",
+      "ts": "2026-04-10T01:50:09+02:00",
+      "expiresAt": 1775778618.511343
+    },
+    {
+      "from": "finance",
+      "to": "strategy",
+      "text": "Reviso el último draft contigo.",
+      "ts": "2026-04-10T01:52:09+02:00",
+      "expiresAt": 1775778738.502507
+    },
+    {
+      "from": "finance",
+      "to": "marketing",
+      "text": "Te paso el memo en 10.",
+      "ts": "2026-04-10T01:53:09+02:00",
+      "expiresAt": 1775778798.505768
+    },
+    {
+      "from": "bd",
+      "to": "strategy",
+      "text": "Reviso el último draft contigo.",
+      "ts": "2026-04-10T01:55:09+02:00",
+      "expiresAt": 1775778918.51236
+    },
+    {
+      "from": "legal",
+      "to": "bd",
+      "text": "Alineemos antes del weekly.",
+      "ts": "2026-04-10T01:56:09+02:00",
+      "expiresAt": 1775778978.519127
+    }
+  ],
+  "worklog": [
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 14"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 15"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 16"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 17"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 18"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 19"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 20"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 21"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 22"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 23"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 24"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 25"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 26"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 27"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 28"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 29"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 30"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 31"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 32"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 33"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 34"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 35"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 36"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 37"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 38"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 39"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 40"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 41"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 42"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 43"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 44"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 45"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 46"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 47"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 48"
+    },
+    {
+      "t": "01:07",
+      "agent": "Finance Head",
+      "txt": "💬 → Exec Assistant: burst 49"
+    },
+    {
+      "t": "01:08",
+      "agent": "BizDev Head",
+      "txt": "💬 → Strategy Head: ¿Escalamos esto al CEO?"
+    },
+    {
+      "t": "01:08",
+      "agent": "Claude COO",
+      "txt": "💬 → Operations Head: Alineemos antes del weekly."
+    },
+    {
+      "t": "01:09",
+      "agent": "Operations Head",
+      "txt": "💬 → BizDev Head: ¿Escalamos esto al CEO?"
+    },
+    {
+      "t": "01:09",
+      "agent": "Marketing Head",
+      "txt": "💬 → Research Head: Reviso el último draft contigo."
+    },
+    {
+      "t": "01:09",
+      "agent": "Legal & HR Head",
+      "txt": "💬 → Strategy Head: ¿Cerramos la postura para meeting?"
+    },
+    {
+      "t": "01:10",
+      "agent": "Claude COO",
+      "txt": "💬 → Legal & HR Head: ¿Viste la última aprobación?"
+    },
+    {
+      "t": "01:10",
+      "agent": "Claude COO",
+      "txt": "💬 → Strategy Head: Luego te cuento de GMP."
+    },
+    {
+      "t": "01:10",
+      "agent": "Operations Head",
+      "txt": "💬 → Strategy Head: ¿Cerramos la postura para meeting?"
+    },
+    {
+      "t": "01:11",
+      "agent": "Strategy Head",
+      "txt": "💬 → Exec Assistant: ¿Cerramos la postura para meeting?"
+    },
+    {
+      "t": "01:11",
+      "agent": "Claude COO",
+      "txt": "💬 → Research Head: Café rápido ☕"
+    },
+    {
+      "t": "01:11",
+      "agent": "Finance Head",
+      "txt": "💬 → Legal & HR Head: Te paso el memo en 10."
+    },
+    {
+      "t": "01:11",
+      "agent": "Finance Head",
+      "txt": "💬 → Legal & HR Head: Alineemos antes del weekly."
+    },
+    {
+      "t": "01:12",
+      "agent": "Research Head",
+      "txt": "💬 → Exec Assistant: Te paso el memo en 10."
+    },
+    {
+      "t": "01:12",
+      "agent": "BizDev Head",
+      "txt": "💬 → Marketing Head: ¿Cerramos la postura para meeting?"
+    },
+    {
+      "t": "01:13",
+      "agent": "Finance",
+      "txt": "💬 → Legal/HR: Alineemos antes del weekly."
+    },
+    {
+      "t": "01:13",
+      "agent": "COO",
+      "txt": "💬 → Ops: Café rápido ☕"
+    },
+    {
+      "t": "01:13",
+      "agent": "Legal/HR",
+      "txt": "💬 → Strategy: Alineemos antes del weekly."
+    },
+    {
+      "t": "01:13",
+      "agent": "COO",
+      "txt": "💬 → Marketing: ¿Cerramos la postura para meeting?"
+    },
+    {
+      "t": "01:14",
+      "agent": "Finance",
+      "txt": "💬 → Ops: Reviso el último draft contigo."
+    },
+    {
+      "t": "01:14",
+      "agent": "Strategy",
+      "txt": "💬 → Research: Alineemos antes del weekly."
+    },
+    {
+      "t": "01:14",
+      "agent": "Marketing",
+      "txt": "💬 → Strategy: Reviso el último draft contigo."
+    },
+    {
+      "t": "01:14",
+      "agent": "COO",
+      "txt": "💬 → Finance: Necesito tu input de 2 min."
+    },
+    {
+      "t": "01:15",
+      "agent": "Legal/HR",
+      "txt": "💬 → BD: Alineemos antes del weekly."
+    },
+    {
+      "t": "01:16",
+      "agent": "Ops",
+      "txt": "💬 → Exec: ¿Cerramos la postura para meeting?"
+    },
+    {
+      "t": "01:17",
+      "agent": "Legal/HR",
+      "txt": "💬 → Ops: ¿Escalamos esto al CEO?"
+    },
+    {
+      "t": "01:17",
+      "agent": "COO",
+      "txt": "💬 → Research: Café rápido ☕"
+    },
+    {
+      "t": "01:19",
+      "agent": "Ops",
+      "txt": "💬 → Exec: ¿Cerramos la postura para meeting?"
+    },
+    {
+      "t": "01:19",
+      "agent": "Finance",
+      "txt": "💬 → Legal/HR: ¿Escalamos esto al CEO?"
+    },
+    {
+      "t": "01:19",
+      "agent": "Ops",
+      "txt": "💬 → Research: Café rápido ☕"
+    },
+    {
+      "t": "01:20",
+      "agent": "COO",
+      "txt": "💬 → Strategy: Te paso el memo en 10."
+    },
+    {
+      "t": "01:20",
+      "agent": "COO",
+      "txt": "💬 → Exec: Te paso el memo en 10."
+    },
+    {
+      "t": "01:21",
+      "agent": "COO",
+      "txt": "💬 → Research: ¿Cerramos la postura para meeting?"
+    },
+    {
+      "t": "01:22",
+      "agent": "Legal/HR",
+      "txt": "💬 → Exec: ¿Escalamos esto al CEO?"
+    },
+    {
+      "t": "01:23",
+      "agent": "COO",
+      "txt": "💬 → Strategy: ¿Escalamos esto al CEO?"
+    },
+    {
+      "t": "01:23",
+      "agent": "Finance",
+      "txt": "💬 → Marketing: Necesito tu input de 2 min."
+    },
+    {
+      "t": "01:23",
+      "agent": "Ops",
+      "txt": "💬 → Marketing: Reviso el último draft contigo."
+    },
+    {
+      "t": "01:23",
+      "agent": "BD",
+      "txt": "💬 → Exec: ¿Cerramos la postura para meeting?"
+    },
+    {
+      "t": "01:25",
+      "agent": "Finance",
+      "txt": "💬 → Ops: ¿Viste la última aprobación?"
+    },
+    {
+      "t": "01:25",
+      "agent": "BD",
+      "txt": "💬 → Marketing: Alineemos antes del weekly."
+    },
+    {
+      "t": "01:26",
+      "agent": "Marketing",
+      "txt": "💬 → Exec: Te paso el memo en 10."
+    },
+    {
+      "t": "01:26",
+      "agent": "Strategy",
+      "txt": "💬 → Research: Reviso el último draft contigo."
+    },
+    {
+      "t": "01:27",
+      "agent": "BD",
+      "txt": "💬 → Marketing: Alineemos antes del weekly."
+    },
+    {
+      "t": "01:29",
+      "agent": "Finance",
+      "txt": "💬 → Marketing: Alineemos antes del weekly."
+    },
+    {
+      "t": "01:30",
+      "agent": "Finance",
+      "txt": "💬 → Strategy: Café rápido ☕"
+    },
+    {
+      "t": "01:30",
+      "agent": "COO",
+      "txt": "💬 → Marketing: ¿Escalamos esto al CEO?"
+    },
+    {
+      "t": "01:33",
+      "agent": "Ops",
+      "txt": "💬 → Marketing: Reviso el último draft contigo."
+    },
+    {
+      "t": "01:33",
+      "agent": "COO",
+      "txt": "💬 → BD: Luego te cuento de GMP."
+    },
+    {
+      "t": "01:33",
+      "agent": "Finance",
+      "txt": "💬 → Research: ¿Cerramos la postura para meeting?"
+    },
+    {
+      "t": "01:34",
+      "agent": "Finance",
+      "txt": "💬 → Marketing: ¿Cerramos la postura para meeting?"
+    },
+    {
+      "t": "01:34",
+      "agent": "Finance",
+      "txt": "💬 → Strategy: Te paso el memo en 10."
+    },
+    {
+      "t": "01:38",
+      "agent": "Legal/HR",
+      "txt": "💬 → BD: Necesito tu input de 2 min."
+    },
+    {
+      "t": "01:39",
+      "agent": "COO",
+      "txt": "💬 → BD: ¿Cerramos la postura para meeting?"
+    },
+    {
+      "t": "01:40",
+      "agent": "COO",
+      "txt": "💬 → Ops: ¿Cerramos la postura para meeting?"
+    },
+    {
+      "t": "01:40",
+      "agent": "Finance",
+      "txt": "💬 → Marketing: Necesito tu input de 2 min."
+    },
+    {
+      "t": "01:42",
+      "agent": "Finance",
+      "txt": "💬 → BD: ¿Escalamos esto al CEO?"
+    },
+    {
+      "t": "01:45",
+      "agent": "Finance",
+      "txt": "💬 → Marketing: Alineemos antes del weekly."
+    },
+    {
+      "t": "01:46",
+      "agent": "Research",
+      "txt": "💬 → Exec: Café rápido ☕"
+    },
+    {
+      "t": "01:48",
+      "agent": "Finance",
+      "txt": "💬 → Exec: Alineemos antes del weekly."
+    },
+    {
+      "t": "01:49",
+      "agent": "Finance",
+      "txt": "💬 → Marketing: ¿Cerramos la postura para meeting?"
+    },
+    {
+      "t": "01:50",
+      "agent": "Finance",
+      "txt": "💬 → Marketing: Reviso el último draft contigo."
+    },
+    {
+      "t": "01:52",
+      "agent": "Finance",
+      "txt": "💬 → Strategy: Reviso el último draft contigo."
+    },
+    {
+      "t": "01:53",
+      "agent": "Finance",
+      "txt": "💬 → Marketing: Te paso el memo en 10."
+    },
+    {
+      "t": "01:55",
+      "agent": "BD",
+      "txt": "💬 → Strategy: Reviso el último draft contigo."
+    },
+    {
+      "t": "01:56",
+      "agent": "Legal/HR",
+      "txt": "💬 → BD: Alineemos antes del weekly."
+    }
+  ],
+  "activeWork": [],
+  "thinkingStatus": {},
+  "plans": {},
+  "reports": [],
+  "memoryEvents": [],
+  "toolsManifest": {
+    "categories": [
+      {
+        "name": "Storage",
+        "tools": [
+          {
+            "id": "gdrive",
+            "name": "Google Drive",
+            "scope": "files",
+            "status": "connected"
+          },
+          {
+            "id": "ms-docs",
+            "name": "MS Office Suite",
+            "scope": "docx/xlsx/pptx",
+            "status": "connected"
+          }
+        ]
+      },
+      {
+        "name": "Comms",
+        "tools": [
+          {
+            "id": "gmail",
+            "name": "Gmail",
+            "scope": "email",
+            "status": "connected"
+          },
+          {
+            "id": "slack",
+            "name": "Slack",
+            "scope": "messaging",
+            "status": "connected"
+          }
+        ]
+      },
+      {
+        "name": "Calendar",
+        "tools": [
+          {
+            "id": "calendly",
+            "name": "Calendly",
+            "scope": "scheduling",
+            "status": "connected"
+          }
+        ]
+      },
+      {
+        "name": "Meetings",
+        "tools": [
+          {
+            "id": "granola",
+            "name": "Granola",
+            "scope": "transcripts",
+            "status": "connected"
+          }
+        ]
+      },
+      {
+        "name": "Design",
+        "tools": [
+          {
+            "id": "canva",
+            "name": "Canva",
+            "scope": "graphics",
+            "status": "connected"
+          },
+          {
+            "id": "figma",
+            "name": "Figma",
+            "scope": "design",
+            "status": "connected"
+          }
+        ]
+      },
+      {
+        "name": "Browser",
+        "tools": [
+          {
+            "id": "chrome-mcp",
+            "name": "Chrome MCP",
+            "scope": "web automation",
+            "status": "connected"
+          }
+        ]
+      },
+      {
+        "name": "Desktop",
+        "tools": [
+          {
+            "id": "computer-use",
+            "name": "Computer Use",
+            "scope": "desktop control",
+            "status": "connected"
+          }
+        ]
+      },
+      {
+        "name": "Schedule",
+        "tools": [
+          {
+            "id": "scheduled-tasks",
+            "name": "Scheduled Tasks",
+            "scope": "cron/recurring",
+            "status": "connected"
+          }
+        ]
+      }
+    ]
+  }
+}
