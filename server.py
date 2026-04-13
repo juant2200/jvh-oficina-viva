@@ -228,7 +228,9 @@ class Handler(SimpleHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Cache-Control", "no-store")
         SimpleHTTPRequestHandler.end_headers(self)
-
+# Serve office_state.json from STATE_DIR (not deploy dir)
+        if parsed.path == "/office_state.json":
+            return self._send_json(load_state())
     def do_OPTIONS(self):
         self.send_response(204)
         self.send_header("Access-Control-Allow-Origin", "*")
