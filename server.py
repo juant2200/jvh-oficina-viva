@@ -729,7 +729,7 @@ class Handler(SimpleHTTPRequestHandler):
             return
 
         if not ANTHROPIC_API_KEY:
-self.send_response(503)
+            self.send_response(503)
             self.send_header("Content-Type", "text/event-stream")
             self.send_header("Cache-Control", "no-cache")
             self.send_header("Access-Control-Allow-Origin", "*")
