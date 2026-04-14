@@ -621,7 +621,7 @@
     50% { opacity: 1; transform: translateY(-2px) }
   }
 
-  /* ===== DIALOGUE BU%BLES (agent-to-agent) ===== */
+  /* ===== DIALOGUE BUBBLES (agent-to-agent) ===== */
   .dialogue-layer { position: absolute; inset: 0; pointer-events: none; z-index: 60; }
   .d-bubble {
     position: absolute;
@@ -868,6 +868,72 @@
     font-size: 10px; opacity: 0.9; margin-top: 2px;
   }
 
+  /* ===== AGENT COMPLETION TOAST (prominent popup) ===== */
+  .completion-toast {
+    position: fixed; top: 80px; right: 24px;
+    transform: translateX(120%);
+    min-width: 320px; max-width: 420px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #fff; padding: 16px 20px 18px 20px;
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(16,185,129,0.55), 0 0 0 4px rgba(16,185,129,0.18);
+    display: flex; gap: 14px; align-items: flex-start;
+    z-index: 2000; opacity: 0; pointer-events: auto;
+    transition: transform 0.45s cubic-bezier(0.16,1.2,0.3,1), opacity 0.3s;
+    cursor: pointer;
+    border: 2px solid rgba(255,255,255,0.25);
+  }
+  .completion-toast.on {
+    transform: translateX(0);
+    opacity: 1;
+    animation: completionBounce 0.8s cubic-bezier(0.16,1.2,0.3,1);
+  }
+  .completion-toast.warn {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    box-shadow: 0 20px 60px rgba(245,158,11,0.55), 0 0 0 4px rgba(245,158,11,0.18);
+  }
+  @keyframes completionBounce {
+    0%   { transform: translateX(120%) scale(0.9); }
+    60%  { transform: translateX(-8px) scale(1.04); }
+    100% { transform: translateX(0) scale(1); }
+  }
+  .completion-toast .ct-badge {
+    font-size: 32px;
+    flex: 0 0 auto;
+    animation: badgePop 1s ease-out 0.2s both;
+  }
+  @keyframes badgePop {
+    0% { transform: scale(0) rotate(-25deg); }
+    60%{ transform: scale(1.3) rotate(10deg); }
+    100%{ transform: scale(1) rotate(0); }
+  }
+  .completion-toast .ct-body { flex: 1 1 auto; min-width: 0; }
+  .completion-toast .ct-title {
+    font-size: 14px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.6px;
+    margin-bottom: 4px;
+  }
+  .completion-toast .ct-agent {
+    font-size: 11px; font-weight: 700; opacity: 0.9; margin-bottom: 6px;
+  }
+  .completion-toast .ct-summary {
+    font-size: 12px; line-height: 1.4;
+    background: rgba(0,0,0,0.15); padding: 8px 10px; border-radius: 8px;
+    max-height: 80px; overflow: hidden; text-overflow: ellipsis;
+    display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical;
+  }
+  .completion-toast .ct-close {
+    position: absolute; top: 6px; right: 10px;
+    background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4);
+    color: #fff; opacity: 0.85; border-radius: 4px;
+    font-size: 11px; font-weight: 600; cursor: pointer; padding: 4px 8px;
+    white-space: nowrap;
+  }
+  .completion-toast .ct-close:hover { opacity: 1; background: rgba(255,255,255,0.3); }
+  .completion-toast .ct-hint {
+    font-size: 9px; opacity: 0.75; margin-top: 6px; letter-spacing: 0.4px;
+  }
+
   /* ===== MEMORY / PLAN / REFLECTION BLOCKS in drawer ===== */
   .dr-memory {
     max-height: 180px; overflow-y: auto;
@@ -933,22 +999,6 @@
     <div class="alarm-bar" id="alarm"></div>
   </header>
 
-  <!-- ============ QUICK NAV ============ -->
-  <div id="nav-strip" style="background:var(--bg);border-bottom:1px solid var(--border);padding:6px 24px;display:flex;gap:16px;align-items:center;font-size:13px;flex-wrap:wrap;">
-    <strong style="color:var(--muted);margin-right:4px;">Nav:</strong>
-    <a href="/OFFICE_SIM.html" style="color:var(--accent2);text-decoration:none;">Oficina</a>
-    <a href="https://juant2200.github.io/jvh-office/JV_Holdings_Dashboard_v3.html#overview" target="_blank" style="color:var(--accent);text-decoration:none;">Dashboard v3</a>
-    <a href="https://drive.google.com/drive/folders/1VcRpR19M-l6WC1GN5k-N3ECGrdQA8MKj?usp=drive_link" target="_blank" style="color:#34a853;text-decoration:none;">Drive JVH</a>
-    <a href="https://mail.google.com" target="_blank" style="color:#ea4335;text-decoration:none;">Gmail</a>
-    <a href="https://calendar.google.com" target="_blank" style="color:#4285f4;text-decoration:none;">Calendar</a>
-  </div>
-
-  <!-- ============ TOOLS STRIP ============ -->
-  <div id="tools-strip" style="background:var(--card);border-bottom:1px solid var(--border);padding:6px 24px;display:flex;gap:8px;align-items:center;font-size:12px;flex-wrap:wrap;min-height:28px;">
-    <strong style="color:var(--muted);margin-right:4px;">Tools:</strong>
-    <span style="color:var(--muted)">cargando…</span>
-  </div>
-
   <!-- ============ FOCUS BANNER ============ -->
   <div class="focus">
     <div>
@@ -976,6 +1026,13 @@
       <div class="card">
         <h3>💰 Cashflow engines</h3>
         <div id="engines-list"></div>
+      </div>
+
+      <div class="card" id="financials-card">
+        <h3>📊 Financials <span id="fin-sync-badge" style="font-size:9px;color:var(--muted);margin-left:6px">no sync</span></h3>
+        <div id="financials-panel" style="font-size:12px;">
+          <div style="color:var(--dim);padding:8px 0;">Waiting for Drive sync...</div>
+        </div>
       </div>
 
       <div class="card">
@@ -1058,6 +1115,18 @@
   <div class="tt-body">
     <div class="tt-title">Thinking loop corriendo</div>
     <div class="tt-agents" id="tt-agents">—</div>
+  </div>
+</div>
+
+<!-- ============ AGENT COMPLETION TOAST (prominent) ============ -->
+<div class="completion-toast" id="completion-toast" onclick="onCompletionToastClick()">
+  <button class="ct-close" id="ct-dismiss" onclick="event.stopPropagation();acknowledgeCompletion()">✓ Visto</button>
+  <div class="ct-badge" id="ct-badge">✅</div>
+  <div class="ct-body">
+    <div class="ct-title" id="ct-title">Agente terminó <span id="ct-counter" style="font-size:10px;opacity:0.8"></span></div>
+    <div class="ct-agent" id="ct-agent">—</div>
+    <div class="ct-summary" id="ct-summary">—</div>
+    <div class="ct-hint">Click para abrir · Clic "✓ Visto" para marcar leído</div>
   </div>
 </div>
 
@@ -1250,6 +1319,12 @@ function renderFloor() {
     const classes = [a.mood || 'focused'];
     if (working) classes.push('working-now');
     if (a.activity === 'coffee') classes.push('coffee');
+
+    // Check if this agent has unacknowledged completions
+    const hasUnackedCompletion = _pendingNotifs.some(n =>
+      n.agent === a.id && !_completionAckIds.has(n.id)
+    );
+
     html += `
       <div class="character ${classes.join(' ')}"
            id="char-${a.id}"
@@ -1257,6 +1332,7 @@ function renderFloor() {
            onclick="openAgentPanel('${a.id}')">
         ${working ? '<div class="work-halo"></div>' : ''}
         ${working ? '<div class="workdots"><span></span><span></span><span></span></div>' : ''}
+        ${hasUnackedCompletion ? '<div style="position:absolute;top:-8px;right:-8px;width:14px;height:14px;background:#ef4444;border-radius:50%;border:2px solid #fff;z-index:10"></div>' : ''}
         <div class="char-name" style="border-color:${a.color}">${a.name}</div>
         ${characterSVG(a)}
         <div class="bubble" style="--char-color:${a.color}">${escapeHtml(truncTask)}</div>
@@ -1452,7 +1528,85 @@ function renderSidebars() {
   renderCeoInbox();
   renderDriveList();
   renderMailList();
+  renderFinancials();
   updateThinkingToast();
+  pollCompletionNotifications();
+}
+
+/* ============================================================
+   FINANCIALS PANEL — live data from Drive via Apps Script bridge
+============================================================ */
+function renderFinancials() {
+  const panel = document.getElementById('financials-panel');
+  const badge = document.getElementById('fin-sync-badge');
+  if (!panel || !STATE) return;
+
+  const fin = STATE.financials || {};
+  if (!fin.lastSyncedAt) {
+    badge.textContent = 'no sync';
+    panel.innerHTML = '<div style="color:var(--dim);padding:8px 0;font-size:11px;">Esperando primera sincronización con Drive...<br><span style="font-size:10px;color:var(--muted)">Deploy the DriveFinancialBridge.gs script to enable auto-sync</span></div>';
+    return;
+  }
+
+  // Show sync time
+  const syncDate = new Date(fin.lastSyncedAt);
+  const ago = Math.round((Date.now() - syncDate.getTime()) / 60000);
+  badge.textContent = ago < 2 ? 'just now' : ago + 'm ago';
+  badge.style.color = ago < 20 ? 'var(--accent)' : ago < 60 ? 'var(--gold)' : 'var(--red)';
+
+  const engines = ['gmp', 'uts', 'cargx'];
+  const labels = { gmp: 'GMP Publicidad', uts: 'UnitedSmartTech', cargx: 'CargX Logistics' };
+  const colors = { gmp: 'var(--pink)', uts: 'var(--blue)', cargx: 'var(--orange)' };
+
+  let html = '';
+  for (const eng of engines) {
+    const data = fin[eng] || {};
+    const summary = data.summary || {};
+    const files = data.files || [];
+    const fileCount = data.fileCount || 0;
+
+    html += `<div style="margin-bottom:10px;padding:8px 10px;background:var(--bg2);border-radius:8px;border-left:3px solid ${colors[eng]}">`;
+    html += `<div style="font-weight:700;font-size:11px;color:${colors[eng]};margin-bottom:4px">${labels[eng]} <span style="color:var(--muted);font-weight:400">(${fileCount} files)</span></div>`;
+
+    // Show key metrics from summary
+    const metricKeys = Object.keys(summary).filter(k => !k.startsWith('_'));
+    if (metricKeys.length > 0) {
+      for (const key of metricKeys.slice(0, 6)) {
+        const val = summary[key];
+        if (val === null || val === undefined) continue;
+        const label = key.replace(/_/g, ' ').replace(/total/gi, '').trim();
+        const display = typeof val === 'number' ? fmtNum(val) : (typeof val === 'object' ? JSON.stringify(val).substring(0, 60) : String(val));
+        html += `<div style="display:flex;justify-content:space-between;font-size:11px;padding:1px 0">`;
+        html += `<span style="color:var(--muted);text-transform:capitalize">${escapeHtml(label)}</span>`;
+        html += `<span style="font-weight:600;font-variant-numeric:tabular-nums">${escapeHtml(display)}</span>`;
+        html += `</div>`;
+      }
+    } else if (fileCount === 0) {
+      html += '<div style="font-size:10px;color:var(--dim)">No spreadsheets found in folder</div>';
+    } else {
+      html += '<div style="font-size:10px;color:var(--dim)">Files synced — parsing metrics...</div>';
+    }
+
+    // Show file names
+    if (files.length > 0) {
+      html += '<div style="margin-top:4px;font-size:9px;color:var(--dim)">';
+      for (const f of files.slice(0, 3)) {
+        const name = f.name || f.fileName || '?';
+        html += `📄 ${escapeHtml(name)}<br>`;
+      }
+      html += '</div>';
+    }
+
+    html += '</div>';
+  }
+
+  panel.innerHTML = html;
+}
+
+function fmtNum(n) {
+  if (Math.abs(n) >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+  if (Math.abs(n) >= 1000) return (n / 1000).toFixed(1) + 'K';
+  return n.toLocaleString('en-US', { maximumFractionDigits: 2 });
 }
 
 /* ============================================================
@@ -1601,6 +1755,171 @@ function updateThinkingToast() {
   }
 }
 
+/* ============================================================
+   AGENT COMPLETION TOAST (prominent popup + sound + browser notif)
+============================================================ */
+let _completionToastTimer = null;
+let _completionToastAgent = null;
+let _completionAckIds = new Set();
+let _completionToastTimer = null;
+let _pendingNotifs = [];  // Track notifs that haven't been acked yet
+
+// Load acks from localStorage
+function loadAcks() {
+  try {
+    const stored = localStorage.getItem('completion_acks');
+    if (stored) {
+      const acks = JSON.parse(stored);
+      _completionAckIds = new Set(acks);
+    }
+  } catch (e) {}
+}
+
+// Save acks to localStorage
+function saveAcks() {
+  try {
+    localStorage.setItem('completion_acks', JSON.stringify(Array.from(_completionAckIds)));
+  } catch (e) {}
+}
+
+function _playCompletionSound(ok) {
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    const ctx = new AC();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.type = 'sine';
+    // Major triad for success, minor 2nd for warning
+    const notes = ok ? [523.25, 659.25, 783.99] : [440, 466.16];
+    const dur = ok ? 0.11 : 0.18;
+    let t = ctx.currentTime;
+    notes.forEach((f, i) => {
+      o.frequency.setValueAtTime(f, t + i * dur);
+    });
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.18, t + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + notes.length * dur);
+    o.start(t);
+    o.stop(t + notes.length * dur + 0.05);
+  } catch (e) { /* audio blocked — silent */ }
+}
+
+function _ensureBrowserNotifPerm() {
+  if (!('Notification' in window)) return;
+  if (Notification.permission === 'default') {
+    try { Notification.requestPermission(); } catch (e) {}
+  }
+}
+
+function _fireBrowserNotif(title, body, ok) {
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  try {
+    const n = new Notification(title, { body, icon: ok ? undefined : undefined, tag: 'oficina-complete' });
+    setTimeout(() => { try { n.close(); } catch (e) {} }, 8000);
+  } catch (e) {}
+}
+
+function showCompletionToast(notif) {
+  if (!notif) return;
+  const el = document.getElementById('completion-toast');
+  if (!el) return;
+  const ok = notif.ok !== false;
+  el.classList.toggle('warn', !ok);
+  document.getElementById('ct-badge').textContent = ok ? '✅' : '⚠️';
+
+  // Show title with pending count if multiple notifs waiting
+  let titleText = ok ? '¡Agente terminó!' : 'Agente respondió con aviso';
+  const pending = _pendingNotifs.filter(n => !_completionAckIds.has(n.id)).length;
+  if (pending > 1) {
+    titleText += ` <span id="ct-counter">(${pending})</span>`;
+  }
+  document.getElementById('ct-title').innerHTML = titleText;
+
+  document.getElementById('ct-agent').textContent =
+    (notif.agent_name || notif.agent || '').toUpperCase()
+    + (notif.ts ? ' · ' + notif.ts : '');
+  document.getElementById('ct-summary').textContent = notif.summary || notif.task || '—';
+  _completionToastAgent = notif.agent || null;
+  el.classList.add('on');
+
+  _playCompletionSound(ok);
+  _fireBrowserNotif(
+    (ok ? '✅ ' : '⚠️ ') + (notif.agent_name || notif.agent) + ' terminó',
+    notif.summary || notif.task || '',
+    ok
+  );
+
+  // NO auto-hide timer — toast is now persistent until user clicks "✓ Visto"
+  if (_completionToastTimer) clearTimeout(_completionToastTimer);
+  _completionToastTimer = null;
+}
+
+function hideCompletionToast() {
+  const el = document.getElementById('completion-toast');
+  if (el) el.classList.remove('on');
+  _completionToastAgent = null;
+  if (_completionToastTimer) { clearTimeout(_completionToastTimer); _completionToastTimer = null; }
+}
+
+function acknowledgeCompletion() {
+  const notifId = _completionToastAgent;
+  if (notifId) {
+    // Mark this notif as acknowledged
+    const notif = _pendingNotifs.find(n => n.agent === notifId);
+    if (notif && notif.id) {
+      _completionAckIds.add(notif.id);
+      saveAcks();
+    }
+  }
+  hideCompletionToast();
+
+  // Show next pending notif if exists
+  const nextNotif = _pendingNotifs.find(n => !_completionAckIds.has(n.id));
+  if (nextNotif) {
+    showCompletionToast(nextNotif);
+  }
+}
+
+function onCompletionToastClick() {
+  const id = _completionToastAgent;
+  hideCompletionToast();
+  if (id && typeof openChatDrawer === 'function') {
+    try { openChatDrawer(id); } catch (e) {}
+  } else if (id && typeof openDrawer === 'function') {
+    try { openDrawer(id); } catch (e) {}
+  }
+}
+
+// Poll state for fresh completion notifications emitted by other sessions
+// (thinking loop, auto-tasks, etc) so the CEO sees them even if he didn't
+// type the message himself.
+function pollCompletionNotifications() {
+  if (!STATE) return;
+  const notifs = STATE.completionNotifications || [];
+  _pendingNotifs = notifs;  // Update list of pending notifications
+
+  for (const n of notifs) {
+    if (!n || !n.id) continue;
+    if (_completionAckIds.has(n.id)) continue;
+    // Skip toasting the VERY first load (we only want NEW ones).
+    if (_completionAckIds.size === notifs.length && !_completionNotifBootstrapped) {
+      _completionAckIds.add(n.id);
+      continue;
+    }
+    showCompletionToast(n);
+  }
+  _completionNotifBootstrapped = true;
+}
+let _completionNotifBootstrapped = false;
+
+// Load acks on page load
+loadAcks();
+
+// Request browser notification permission on first user interaction
+document.addEventListener('click', _ensureBrowserNotifPerm, { once: true });
+
 function renderLocalTasks() {
   const tl = document.getElementById('tasks-list');
   document.getElementById('tasks-count').textContent = localTasks.length;
@@ -1668,6 +1987,26 @@ function renderDrawerReflections(agentId) {
   `).join('');
 }
 
+async function renderDrawerDeliverables(agentId) {
+  try {
+    const res = await fetch(`/api/agent/${agentId}/deliverables`);
+    const json = await res.json();
+    if (!json.ok || !json.deliverables || !json.deliverables.length) {
+      return '<div style="color:var(--muted);font-size:10px;text-align:center;padding:8px">Sin deliverables aún</div>';
+    }
+    return json.deliverables.map(d => `
+      <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:11px">
+        <a href="file://${encodeURI(d.relPath)}" target="_blank" style="color:#0ea5e9;text-decoration:none;cursor:pointer;word-break:break-word">
+          📄 ${escapeHtml(d.name)} ${d.kind === 'webpage' ? '🌐' : ''}
+        </a>
+        <div style="color:var(--muted);font-size:9px;margin-top:2px">${new Date(d.mtime * 1000).toLocaleString()}</div>
+      </div>
+    `).join('');
+  } catch (e) {
+    return '<div style="color:#f87171;font-size:10px;text-align:center;padding:8px">Error cargando deliverables</div>';
+  }
+}
+
 /* ============================================================
    AGENT DRAWER (rich side panel)
 ============================================================ */
@@ -1713,6 +2052,9 @@ async function openAgentPanel(id) {
     <h4>Último output</h4>
     <div class="dr-output">${escapeHtml(a.lastOutput || '—')}</div>
 
+    <h4>📄 Deliverables</h4>
+    <div id="dr-deliverables-${a.id}" style="background:rgba(0,0,0,0.15);border-radius:6px;padding:6px 9px;margin-bottom:12px;font-size:10px;color:var(--muted)">Cargando…</div>
+
     <h4>Misión</h4>
     <p>${escapeHtml(a.mission || '')}</p>
 
@@ -1741,23 +2083,124 @@ async function openAgentPanel(id) {
       ${wl.length ? wl.map(w => `<div class="dr-wl-item"><span class="t">${w.t}</span>${escapeHtml(w.txt)}</div>`).join('') : '<div style="color:var(--muted);font-size:10px;text-align:center;padding:10px">Sin entradas recientes para este agente</div>'}
     </div>
 
-    <h4>💬 Hablarle directamente</h4>
-    <div class="dr-actions">
-      <input id="dr-chat" placeholder="Instrucción, pregunta, contexto…" />
-      <button onclick="buildChatBlock('${a.id}')">Asignar</button>
+    <h4 style="display:flex;align-items:center;gap:8px">🛠 Toolbelt de ${escapeHtml(a.name)} <span style="font-size:10px;color:var(--muted);font-weight:400">— ${escapeHtml(a.name)} ejecuta con web search, code, Drive, Gmail, Slack…</span></h4>
+    <div style="background:linear-gradient(135deg,#0b1a2e,#060d19);border:1px solid #0ea5e944;border-radius:10px;padding:10px;margin-bottom:14px">
+      <div id="dr-tb-chips-${a.id}" style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;min-height:22px">
+        <div style="color:var(--muted);font-size:10px">Cargando toolbelt…</div>
+      </div>
+      <textarea id="dr-tb-task-${a.id}" placeholder="Descríbele la tarea a ${escapeHtml(a.name)} (ej: 'busca noticias de Farmacia Carol últimos 7 días y dame 3 ángulos', 'calcula IRR con estos cashflows: ...', 'diseña logo CargX', 'busca en Drive el modelo GMP'). Ctrl+Enter para ejecutar." style="width:100%;background:rgba(0,0,0,.3);border:1px solid #0ea5e955;color:#e0f2fe;padding:8px 10px;border-radius:6px;font-size:12px;resize:vertical;min-height:52px;font-family:inherit;box-sizing:border-box" onkeydown="if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault();runAgentTool('${a.id}')}"></textarea>
+      <div style="display:flex;gap:6px;align-items:center;margin-top:6px;flex-wrap:wrap">
+        <select id="dr-tb-model-${a.id}" style="background:rgba(0,0,0,.3);border:1px solid #0ea5e955;color:#e0f2fe;padding:6px;border-radius:5px;font-size:11px">
+          <option value="gpt-4o-mini">gpt-4o-mini · rápido</option>
+          <option value="gpt-4o">gpt-4o · completo</option>
+          <option value="gpt-4.1-mini">gpt-4.1-mini</option>
+          <option value="o4-mini">o4-mini · razona</option>
+        </select>
+        <button onclick="runAgentTool('${a.id}')" style="background:linear-gradient(135deg,#0ea5e9,#0369a1);border:none;color:#fff;padding:7px 14px;border-radius:5px;font-size:12px;cursor:pointer;font-weight:600">▶ Ejecutar</button>
+        <button onclick="toggleToolbeltRuns('${a.id}')" style="background:transparent;border:1px solid #0ea5e955;color:#7dd3fc;padding:6px 10px;border-radius:5px;font-size:11px;cursor:pointer">📜 Historial</button>
+        <span style="font-size:10px;color:var(--muted);margin-left:auto">Ctrl+Enter</span>
+      </div>
+      <div id="dr-tb-out-${a.id}" style="margin-top:10px"></div>
+      <div id="dr-tb-runs-${a.id}" style="margin-top:10px;display:none"></div>
     </div>
+
+    <h4>💬 Chat directo con ${escapeHtml(a.name)}</h4>
+    <div id="dr-chatlog-${a.id}" class="dr-chatlog" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px;max-height:260px;overflow-y:auto;font-size:12px;line-height:1.5;margin-bottom:8px;min-height:80px">
+      <div style="color:var(--muted);font-size:11px;text-align:center;padding:10px">Cargando conversación…</div>
+    </div>
+    <div class="dr-actions">
+      <input id="dr-chat" placeholder="Orden, pregunta, contexto… (Enter para enviar)" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();buildChatBlock('${a.id}')}" />
+      <button onclick="buildChatBlock('${a.id}')">Enviar</button>
+    </div>
+    <div style="font-size:10px;color:var(--muted);margin-top:4px;padding:0 2px">↳ se archiva en <code>INBOX/chats/${a.id}.md</code> y entra a la cola</div>
     <div id="chat-output-${a.id}"></div>
   `;
 
   drawer.classList.add('open');
+
+  // Async load deliverables
+  renderDrawerDeliverables(a.id);
+  loadChatLogForAgent(a.id);
+  loadToolbeltChips(a.id);
+  startChatPolling(a.id);
   setTimeout(() => {
     const el = document.getElementById('dr-answer') || document.getElementById('dr-chat');
     if (el) el.focus();
   }, 450);
 }
 
+let _chatPollTimer = null;
+let _chatPollAgent = null;
+function startChatPolling(id) {
+  stopChatPolling();
+  _chatPollAgent = id;
+  _chatPollTimer = setInterval(() => {
+    if (_chatPollAgent) loadChatLogForAgent(_chatPollAgent);
+  }, 10000);
+}
+function stopChatPolling() {
+  if (_chatPollTimer) { clearInterval(_chatPollTimer); _chatPollTimer = null; }
+  _chatPollAgent = null;
+}
+
+async function loadChatLogForAgent(id) {
+  const box = document.getElementById('dr-chatlog-' + id);
+  if (!box) return;
+  try {
+    const res = await fetch('/api/chat_log/' + id, {cache:'no-store'});
+    const data = await res.json();
+    const md = (data && data.markdown) || '';
+    renderChatLog(box, md);
+  } catch (e) {
+    box.innerHTML = '<div style="color:var(--muted);font-size:11px;text-align:center;padding:10px">Backend offline — chat no disponible</div>';
+  }
+}
+
+function renderChatLog(box, md) {
+  // Parse ### LABEL · YYYY-MM-DD HH:MM\n body
+  const lines = md.split('\n');
+  const msgs = [];
+  let cur = null;
+  for (const ln of lines) {
+    const m = ln.match(/^###\s+(.+?)\s+·\s+(.+)$/);
+    if (m) {
+      if (cur) msgs.push(cur);
+      cur = {label: m[1].trim(), ts: m[2].trim(), body: []};
+    } else if (cur) {
+      cur.body.push(ln);
+    }
+  }
+  if (cur) msgs.push(cur);
+  const clean = msgs.map(m => {
+    const lab = m.label.trim();
+    return {
+      ...m,
+      body: m.body.join('\n').trim(),
+      isCEO: /^ceo(?!→)/i.test(lab),
+      isCEOtoGPT: /^ceo→chatgpt/i.test(lab) || /^ceo→/i.test(lab),
+      isGPT: /^chatgpt/i.test(lab),
+      isToolbelt: /toolbelt$/i.test(lab) || /tool-request$/i.test(lab) || /tool-result$/i.test(lab) || /claude·tool/i.test(lab),
+    };
+  }).filter(m => m.body);
+  if (!clean.length) {
+    box.innerHTML = '<div style="color:var(--muted);font-size:11px;text-align:center;padding:10px">Sin mensajes aún — envía el primero.</div>';
+    return;
+  }
+  box.innerHTML = clean.map(m => {
+    let align;
+    if (m.isToolbelt) align = 'background:linear-gradient(135deg,#082f49,#0c1a2b);color:#e0f2fe;border:1px solid #0ea5e9';
+    else if (m.isCEOtoGPT) align = 'margin-left:auto;background:linear-gradient(135deg,#6d28d9,#4c1d95);color:#fff';
+    else if (m.isGPT) align = 'background:linear-gradient(135deg,#1f1147,#2e1065);color:#ede9fe;border:1px solid #7c3aed';
+    else if (m.isCEO) align = 'margin-left:auto;background:linear-gradient(135deg,#0f766e,#047857);color:#fff';
+    else align = 'background:var(--panel);border:1px solid var(--border)';
+    return `<div style="margin-bottom:8px;max-width:85%;padding:8px 10px;border-radius:10px;${align}"><div style="font-size:9px;opacity:.7;margin-bottom:3px;text-transform:uppercase;letter-spacing:.5px">${escapeHtml(m.label)} · ${escapeHtml(m.ts)}</div>${escapeHtml(m.body)}</div>`;
+  }).join('');
+  box.scrollTop = box.scrollHeight;
+}
+
 function closeDrawer() {
   document.getElementById('drawer').classList.remove('open');
+  stopChatPolling();
   cameraStop();
 }
 
@@ -1796,13 +2239,32 @@ async function buildChatBlock(id) {
   if (!txt) return;
   const a = STATE.agents.find(x => x.id === id);
   const out = document.getElementById('chat-output-' + id);
-  out.innerHTML = '<div style="color:var(--muted);font-size:11px;padding:6px">Enviando tarea al backend…</div>';
-  const res = await api('/api/task', {who: id, text: txt, prio: 'p2'});
+  out.innerHTML = '<div style="color:var(--muted);font-size:11px;padding:6px">Enviando…</div>';
+  // Primary: /api/chat (persists to chat log + appends to TASKS.md)
+  const res = await api('/api/chat', {agent: id, text: txt, role: 'ceo', prio: 'p2', as_task: true});
   if (res && res.ok) {
     if (inp) inp.value = '';
-    out.innerHTML = `<div style="color:var(--accent2);font-size:11px;padding:6px">✓ Tarea asignada a ${a.name} · guardada en INBOX/TASKS.md y office_state.json</div>`;
-    setTimeout(closeDrawer, 1000);
-  } else {
+    const replyStatus = res.reply_ok ? '✓ Respondió al instante' : (res.reply ? '⚠ Respondió (con advertencia)' : '✓ Mensaje enviado');
+    out.innerHTML = `<div style="color:var(--accent2);font-size:11px;padding:6px">${replyStatus} — ${a.name}</div>`;
+    // Refresh the chat log in-place — do NOT close the drawer, keep the conversation open
+    loadChatLogForAgent(id);
+    // Fire the prominent completion toast immediately (server returns it inline)
+    if (res.completion_notification) {
+      try { showCompletionToast(res.completion_notification); } catch (e) {}
+    }
+    setTimeout(() => { out.innerHTML = ''; }, 2500);
+    return;
+  }
+  // Fallback A: legacy /api/task if /api/chat not available (server not restarted)
+  const legacy = await api('/api/task', {who: id, text: txt, prio: 'p2'});
+  if (legacy && legacy.ok) {
+    if (inp) inp.value = '';
+    out.innerHTML = `<div style="color:var(--gold);font-size:11px;padding:6px">⚠ Enviado como tarea (reinicia el servidor para chat persistente)</div>`;
+    setTimeout(() => { out.innerHTML = ''; }, 2500);
+    return;
+  }
+  // Fallback B: backend fully offline — copy-paste
+  if (!res || !legacy) {
     const block =
 `[CEO → ${a.name}]
 ${txt}
@@ -1814,6 +2276,152 @@ ${txt}
       <div style="color:var(--gold);font-size:10px;padding:4px 0">⚠ Backend offline — usa copy-paste</div>
       <div class="copy-block" id="${bid}">${escapeHtml(block)}</div>
       <button class="copy-btn" onclick="copyToClipboard('${bid}')">📋 Copiar</button>`;
+  }
+}
+
+// ============================== AGENT TOOLBELT ==============================
+// Each agent has a toolbelt (web_search, code_interpreter, claude_drive, etc.).
+// runAgentTool hits /api/agent_exec — the agent itself executes the task with OpenAI tools.
+// Claude-side tools are queued via /api/claude_tool_request and picked up in the thinking loop.
+
+const TOOL_CHIP_STYLES = {
+  // OpenAI built-ins
+  web_search:            {bg:'#0ea5e9', fg:'#fff',    icon:'🌐', label:'Web'},
+  code_interpreter:      {bg:'#22c55e', fg:'#052e16', icon:'🐍', label:'Code'},
+  image_generation:      {bg:'#ec4899', fg:'#fff',    icon:'🎨', label:'Image'},
+  file_search:           {bg:'#eab308', fg:'#422006', icon:'📁', label:'Files'},
+  // Google Workspace
+  claude_drive:          {bg:'#4285f4', fg:'#fff',    icon:'📂', label:'Drive'},
+  claude_gmail:          {bg:'#ea4335', fg:'#fff',    icon:'✉', label:'Gmail'},
+  claude_calendar:       {bg:'#8b5cf6', fg:'#fff',    icon:'📅', label:'Cal'},
+  // Communication / Meetings
+  claude_slack:          {bg:'#611f69', fg:'#fff',    icon:'💬', label:'Slack'},
+  claude_granola:        {bg:'#14b8a6', fg:'#fff',    icon:'🎙', label:'Granola'},
+  // Design
+  claude_canva:          {bg:'#00c4cc', fg:'#002a2c', icon:'🖌', label:'Canva'},
+  claude_figma:          {bg:'#1e1e1e', fg:'#f5b7b7', icon:'△',  label:'Figma'},
+  // Web / Research
+  claude_web_fetch:      {bg:'#06b6d4', fg:'#fff',    icon:'🔗', label:'Fetch'},
+  claude_web_search:     {bg:'#0891b2', fg:'#fff',    icon:'🔍', label:'Search'},
+  claude_chrome:         {bg:'#fbbf24', fg:'#422006', icon:'🌍', label:'Chrome'},
+  claude_microsoft_docs: {bg:'#0078d4', fg:'#fff',    icon:'📘', label:'MSDocs'},
+  // Code / DevOps
+  claude_github:         {bg:'#24292e', fg:'#f0f6fc', icon:'🐙', label:'GitHub'},
+  claude_railway:        {bg:'#13111c', fg:'#c084fc', icon:'🚄', label:'Railway'},
+  claude_terminal:       {bg:'#0f172a', fg:'#4ade80', icon:'▮_', label:'Term'},
+  claude_vscode:         {bg:'#007acc', fg:'#fff',    icon:'</>',label:'VSCode'},
+  // System / Orchestration
+  claude_computer:       {bg:'#ef4444', fg:'#fff',    icon:'🖥', label:'Desktop'},
+  claude_scheduled:      {bg:'#f97316', fg:'#fff',    icon:'⏰', label:'Schedule'},
+  claude_session_info:   {bg:'#64748b', fg:'#fff',    icon:'📜', label:'Sessions'},
+  claude_mcp_registry:   {bg:'#78716c', fg:'#fff',    icon:'🔌', label:'MCPs'},
+  claude_cowork_files:   {bg:'#10b981', fg:'#fff',    icon:'📎', label:'Deliver'},
+};
+
+async function loadToolbeltChips(agentId) {
+  const host = document.getElementById('dr-tb-chips-' + agentId);
+  if (!host) return;
+  try {
+    const res = await fetch('/api/toolbelt/' + agentId, {cache:'no-store'});
+    const data = await res.json();
+    if (!data || !data.ok) throw new Error('bad response');
+    const tools = data.tools || [];
+    if (!tools.length) {
+      host.innerHTML = '<div style="color:var(--muted);font-size:10px">Sin toolbelt configurado</div>';
+      return;
+    }
+    host.innerHTML = tools.map(t => {
+      const s = TOOL_CHIP_STYLES[t] || {bg:'#475569', fg:'#fff', icon:'⚙', label:t};
+      return `<span style="display:inline-flex;align-items:center;gap:3px;background:${s.bg};color:${s.fg};padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600" title="${t}">${s.icon} ${s.label}</span>`;
+    }).join('');
+  } catch (e) {
+    host.innerHTML = '<div style="color:var(--gold);font-size:10px">⚠ Backend offline</div>';
+  }
+}
+
+async function runAgentTool(agentId) {
+  const taskEl = document.getElementById('dr-tb-task-' + agentId);
+  const modelEl = document.getElementById('dr-tb-model-' + agentId);
+  const out = document.getElementById('dr-tb-out-' + agentId);
+  if (!taskEl || !out) return;
+  const task = (taskEl.value || '').trim();
+  if (!task) return;
+  const model = (modelEl && modelEl.value) || 'gpt-4o-mini';
+  out.innerHTML = '<div style="color:#7dd3fc;font-size:11px;padding:6px">🛠 ' + agentId.toUpperCase() + ' ejecutando con toolbelt… (modelo: ' + escapeHtml(model) + ')</div>';
+  const res = await api('/api/agent_exec', {agent: agentId, task, model, log: true});
+  if (!res) {
+    out.innerHTML = '<div style="color:var(--gold);font-size:11px;padding:6px">⚠ Backend offline. Reinicia <code>./start_oficina.command</code>.</div>';
+    return;
+  }
+  if (res.meta && res.meta.dry_run) {
+    out.innerHTML = '<div style="color:var(--gold);font-size:11px;padding:6px">⚠ API key no configurada. Agrega <code>OPENAI_API_KEY=sk-...</code> en <code>workers/.env</code> y reinicia.</div>';
+    return;
+  }
+  if (!res.ok) {
+    out.innerHTML = `<div style="color:#ef4444;font-size:11px;padding:6px">✗ Error: ${escapeHtml(res.answer || 'desconocido')}</div>`;
+    return;
+  }
+  const bid = 'tb-ans-' + agentId + '-' + Date.now();
+  const answer = res.answer || '(vacío)';
+  const meta = res.meta || {};
+  const usage = meta.usage ? `· ${meta.usage.total_tokens || '?'} tok` : '';
+  const modelUsed = meta.model || model;
+  const trace = meta.tool_trace || [];
+  const traceHtml = trace.length
+    ? `<div style="margin-top:8px;padding-top:8px;border-top:1px solid #0ea5e933;font-size:10px;color:#7dd3fc">🛠 usó: ${trace.map(t => `<code style="background:rgba(14,165,233,.15);padding:1px 5px;border-radius:3px">${escapeHtml(t.tool)}${t.summary?' · '+escapeHtml(t.summary):''}</code>`).join(' ')}</div>`
+    : '';
+  out.innerHTML = `
+    <div style="background:linear-gradient(135deg,#082f49,#0c1a2b);border:1px solid #0ea5e9;border-radius:8px;padding:10px;color:#e0f2fe">
+      <div style="font-size:9px;opacity:.8;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">${escapeHtml(agentId)} via ${escapeHtml(modelUsed)} ${usage}</div>
+      <div id="${bid}" style="font-size:12px;line-height:1.55;white-space:pre-wrap">${escapeHtml(answer)}</div>
+      ${traceHtml}
+      <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+        <button onclick="copyToClipboard('${bid}')" style="background:#0369a1;border:none;color:#fff;padding:5px 10px;border-radius:5px;font-size:10px;cursor:pointer">📋 Copiar</button>
+        <button onclick="pasteToolResultIntoChat('${agentId}','${bid}')" style="background:#047857;border:none;color:#fff;padding:5px 10px;border-radius:5px;font-size:10px;cursor:pointer">↳ Continuar chat</button>
+        <button onclick="document.getElementById('dr-tb-out-${agentId}').innerHTML=''" style="background:transparent;border:1px solid #0ea5e955;color:#7dd3fc;padding:5px 10px;border-radius:5px;font-size:10px;cursor:pointer">Cerrar</button>
+      </div>
+    </div>`;
+  loadChatLogForAgent(agentId);  // refresh chat since server logged the Q&A
+  taskEl.value = '';
+}
+
+function pasteToolResultIntoChat(agentId, contentId) {
+  const el = document.getElementById(contentId);
+  const chatInp = document.getElementById('dr-chat');
+  if (!el || !chatInp) return;
+  chatInp.value = el.textContent;
+  chatInp.focus();
+}
+
+async function toggleToolbeltRuns(agentId) {
+  const box = document.getElementById('dr-tb-runs-' + agentId);
+  if (!box) return;
+  if (box.style.display === 'block') { box.style.display = 'none'; return; }
+  box.style.display = 'block';
+  box.innerHTML = '<div style="color:var(--muted);font-size:10px;padding:6px">Cargando historial…</div>';
+  try {
+    const res = await fetch('/api/toolbelt/' + agentId, {cache:'no-store'});
+    const data = await res.json();
+    const runs = (data && data.runs) || [];
+    if (!runs.length) {
+      box.innerHTML = '<div style="color:var(--muted);font-size:10px;padding:6px">Sin historial de tool runs aún.</div>';
+      return;
+    }
+    box.innerHTML = runs.slice(0, 15).map(r => {
+      const icon = r.ok ? '✓' : '✗';
+      const color = r.ok ? '#10b981' : '#ef4444';
+      const traceStr = (r.tool_trace || []).map(t => t.tool).join(', ') || '—';
+      return `<div style="border-left:2px solid ${color};padding:5px 8px;margin-bottom:6px;background:rgba(14,165,233,.05);font-size:11px">
+        <div style="display:flex;justify-content:space-between;color:#7dd3fc;font-size:9px;text-transform:uppercase;letter-spacing:.5px">
+          <span>${icon} ${escapeHtml(r.ts || '')} · ${escapeHtml(r.model || '')}</span>
+          <span>tools: ${escapeHtml(traceStr)}</span>
+        </div>
+        <div style="color:#cbd5e1;margin-top:2px"><strong>→</strong> ${escapeHtml((r.task || '').slice(0,120))}</div>
+        <div style="color:#94a3b8;margin-top:2px;font-size:10px">${escapeHtml((r.answer_preview || '').slice(0,180))}${(r.answer_preview||'').length>180?'…':''}</div>
+      </div>`;
+    }).join('');
+  } catch (e) {
+    box.innerHTML = '<div style="color:var(--gold);font-size:11px">⚠ No se pudo cargar historial</div>';
   }
 }
 
@@ -2038,21 +2646,6 @@ function wanderAgents() {
 /* ============================================================
    FETCH STATE (polling)
 ============================================================ */
-function renderToolsStrip() {
-  const el = document.getElementById('tools-strip');
-  if (!el || !STATE || !STATE.toolsManifest) return;
-  const cats = STATE.toolsManifest.categories || [];
-  let html = '<strong style="color:var(--muted);margin-right:4px;">Tools:</strong>';
-  cats.forEach(cat => {
-    (cat.tools || []).forEach(t => {
-      const color = t.status === 'connected' ? '#00c853' : t.status === 'available' ? '#ffa000' : '#f44336';
-      const dot = t.status === 'connected' ? '●' : t.status === 'available' ? '○' : '✕';
-      html += `<span style="background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:12px;padding:2px 10px;display:inline-flex;align-items:center;gap:4px;"><span style="color:${color};font-size:10px;">${dot}</span>${t.name}</span>`;
-    });
-  });
-  el.innerHTML = html;
-}
-
 async function fetchState() {
   try {
     const res = await fetch(STATE_URL + '?t=' + Date.now());
@@ -2071,7 +2664,6 @@ async function fetchState() {
       lastFetchOk.toLocaleTimeString('es-DO') + (BACKEND_LIVE ? ' · backend LIVE ✓' : ' · read-only ⚠');
     renderFloor();
     renderSidebars();
-    renderToolsStrip();
   } catch (e) {
     console.warn('Fetch failed:', e);
     document.getElementById('heartbeat').classList.add('stale');
