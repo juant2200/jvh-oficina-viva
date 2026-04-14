@@ -63,7 +63,8 @@ CEO_DIR = os.path.join(ROOT, "_CEO")
 TOOLBELT_DIR = os.path.join(ROOT, "_TOOLBELT")
 CLAUDE_QUEUE_DIR = os.path.join(ROOT, "workers", "queue", "claude_tools")
 TOOLRUNS_DIR = os.path.join(INBOX, "toolruns")  # per-agent tool call log
-PORT = 8765
+PORT = int(os.environ.get("PORT", "8765"))
+HOST = os.environ.get("HOST", "0.0.0.0")
 
 os.makedirs(INBOX, exist_ok=True)
 os.makedirs(CHATS_DIR, exist_ok=True)
@@ -1608,10 +1609,10 @@ class Handler(SimpleHTTPRequestHandler):
 
 def main():
     os.chdir(ROOT)
-    srv = ThreadingHTTPServer(("127.0.0.1", PORT), Handler)
+    srv = ThreadingHTTPServer((HOST, PORT), Handler)
     print("=" * 60)
     print("  JV HOLDINGS · OFICINA VIVA · backend corriendo")
-    print(f"  → http://localhost:{PORT}/OFFICE_SIM.html")
+    print(f"  → http://{HOST}:{PORT}/OFFICE_SIM.html")
     print(f"  Root:  {ROOT}")
     print(f"  State: {STATE_FILE}")
     print("  Ctrl+C para detener")
